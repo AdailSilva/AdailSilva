@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="Fluxo LoRaWAN bidirecional: sensores e atuadores ligados aos nós; uplink dos sensores até as aplicações e downlink das aplicações até os atuadores, passando por gateway, ChirpStack e Kubernetes">
+<style>
+.t{font:700 15px 'Segoe UI', Ubuntu, Arial, sans-serif;fill:#e6f1fb}
+.s{font:500 11.5px 'JetBrains Mono', Consolas, 'Courier New', monospace;fill:#7f9bb5}
+.c{font:500 11px 'JetBrains Mono', Consolas, 'Courier New', monospace;fill:#c9dbea}
+.h{font:600 11px 'JetBrains Mono', Consolas, monospace;fill:#00e5a0;letter-spacing:2px}
+.k{font:600 10px 'JetBrains Mono', Consolas, monospace;fill:#5f7a94;letter-spacing:2px}
+.up{fill:none;stroke:#17654f;stroke-width:2;stroke-dasharray:6 6;animation:dash 1.2s linear infinite}
+.dn{fill:none;stroke:#6e4d1d;stroke-width:2;stroke-dasharray:6 6;animation:dashr 1.2s linear infinite}
+.rfl{fill:none;stroke:#1d4a66;stroke-width:2;stroke-dasharray:6 6}
+@keyframes dash{to{stroke-dashoffset:-24}}
+@keyframes dashr{to{stroke-dashoffset:24}}
+.box{fill:#071422;stroke:#1c3d55;stroke-width:1.5}
+.dev{fill:#06111c;stroke:#173246;stroke-width:1.2}
+.rf{fill:none;stroke:#00e5a0;stroke-width:2;opacity:0;animation:rf 2.6s ease-out infinite}
+.d1{animation-delay:.9s}.d2{animation-delay:1.7s}
+@keyframes rf{0%{opacity:0}15%{opacity:.9}100%{opacity:0}}
+.gw{animation:gwp 2s ease-in-out infinite}
+@keyframes gwp{50%{filter:drop-shadow(0 0 12px rgba(0,229,160,.8))}}
+.led{animation:led 1s steps(1) infinite}
+@keyframes led{50%{opacity:.2}}
+</style>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#040a12"/><stop offset="1" stop-color="#0a1d2b"/></linearGradient>
+<pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#0e2335" stroke-width="1"/></pattern>
+<filter id="g" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<!-- sensor → nó (uplink) -->
+<path id="s1" d="M154,103 L195,112"/>
+<path id="s2" d="M154,203 L195,212"/>
+<path id="s3" d="M154,303 L195,312"/>
+<!-- nó → atuador (downlink) -->
+<path id="a1" d="M195,128 L154,137"/>
+<path id="a2" d="M195,228 L154,237"/>
+<path id="a3" d="M195,328 L154,337"/>
+<!-- RF nó ↔ gateway (sentido do uplink; o downlink percorre ao contrário) -->
+<path id="p1" d="M255,120 C335,120 340,220 410,220"/>
+<path id="p2" d="M255,220 L410,220"/>
+<path id="p3" d="M255,320 C335,320 340,220 410,220"/>
+<!-- backhaul: uplink (y=210, →) e downlink (y=230, ←) -->
+<path id="u1" d="M520,210 L590,210"/><path id="d1" d="M590,230 L520,230"/>
+<path id="u2" d="M730,210 L800,210"/><path id="d2" d="M800,230 L730,230"/>
+<path id="u3" d="M940,210 L1010,210"/><path id="d3" d="M1010,230 L940,230"/>
+</defs>
+<rect width="1200" height="400" rx="18" fill="url(#bg)"/>
+<rect width="1200" height="400" rx="18" fill="url(#grid)" opacity=".7"/>
+<text x="40" y="38" class="h">DO CAMPO À NUVEM — E DE VOLTA · LoRaWAN AU915</text>
+<text x="1160" y="32" text-anchor="end" class="h">UPLINK ▸ sensores → aplicações</text>
+<text x="1160" y="50" text-anchor="end" class="h" style="fill:#ffb347">◂ DOWNLINK aplicações → atuadores</text>
+
+<text x="14" y="76" class="k">SENSORES/ATUADORES</text>
+<text x="225" y="76" text-anchor="middle" class="k">NÓS</text>
+
+<!-- ligações campo ↔ nós -->
+<use href="#s1" class="up"/><use href="#s2" class="up"/><use href="#s3" class="up"/>
+<use href="#a1" class="dn"/><use href="#a2" class="dn"/><use href="#a3" class="dn"/>
+
+<!-- ligações RF e backhaul -->
+<use href="#p1" class="rfl"/><use href="#p2" class="rfl"/><use href="#p3" class="rfl"/>
+<use href="#u1" class="up"/><use href="#u2" class="up"/><use href="#u3" class="up"/>
+<use href="#d1" class="dn"/><use href="#d2" class="dn"/><use href="#d3" class="dn"/>
+
+<!-- sensores e atuadores -->
+<g>
+  <rect x="14" y="90" width="140" height="26" rx="6" class="dev"/><circle cx="27" cy="103" r="4" fill="#00e5a0"/><text x="38" y="107" class="c">Temp · Umid</text>
+  <rect x="14" y="124" width="140" height="26" rx="6" class="dev"/><rect x="23" y="133" width="8" height="8" rx="1.5" fill="#ffb347"/><text x="38" y="141" class="c">Relé</text>
+  <rect x="14" y="190" width="140" height="26" rx="6" class="dev"/><circle cx="27" cy="203" r="4" fill="#00e5a0"/><text x="38" y="207" class="c">Nível · Pressão</text>
+  <rect x="14" y="224" width="140" height="26" rx="6" class="dev"/><rect x="23" y="233" width="8" height="8" rx="1.5" fill="#ffb347"/><text x="38" y="241" class="c">Válvula</text>
+  <rect x="14" y="290" width="140" height="26" rx="6" class="dev"/><circle cx="27" cy="303" r="4" fill="#00e5a0"/><text x="38" y="307" class="c">Energia · GPS</text>
+  <rect x="14" y="324" width="140" height="26" rx="6" class="dev"/><rect x="23" y="333" width="8" height="8" rx="1.5" fill="#ffb347"/><text x="38" y="341" class="c">Motor · Bomba</text>
+</g>
+
+<!-- leituras (sensor → nó) e comandos (nó → atuador) -->
+<circle r="3" fill="#00f5a8" filter="url(#g)"><animateMotion dur="1.2s" repeatCount="indefinite"><mpath href="#s1"/></animateMotion></circle>
+<circle r="3" fill="#00f5a8" filter="url(#g)"><animateMotion dur="1.2s" begin=".4s" repeatCount="indefinite"><mpath href="#s2"/></animateMotion></circle>
+<circle r="3" fill="#00f5a8" filter="url(#g)"><animateMotion dur="1.2s" begin=".8s" repeatCount="indefinite"><mpath href="#s3"/></animateMotion></circle>
+<rect x="-3" y="-3" width="6" height="6" rx="1" fill="#ffb347" filter="url(#g)"><animateMotion dur="1.2s" begin=".6s" repeatCount="indefinite"><mpath href="#a1"/></animateMotion></rect>
+<rect x="-3" y="-3" width="6" height="6" rx="1" fill="#ffb347" filter="url(#g)"><animateMotion dur="1.2s" begin="1s" repeatCount="indefinite"><mpath href="#a2"/></animateMotion></rect>
+<rect x="-3" y="-3" width="6" height="6" rx="1" fill="#ffb347" filter="url(#g)"><animateMotion dur="1.2s" begin=".2s" repeatCount="indefinite"><mpath href="#a3"/></animateMotion></rect>
+
+<!-- nós -->
+<g>
+  <g transform="translate(225,120)">
+    <circle r="18" class="rf"/><circle r="18" class="rf d1"/>
+    <rect x="-30" y="-16" width="60" height="32" rx="7" class="box"/><circle cx="22" cy="-8" r="3" fill="#00e5a0" class="led"/>
+    <text x="-16" y="5" class="s" style="fill:#c9dbea">ESP32</text>
+  </g>
+  <text x="225" y="153" text-anchor="middle" class="s">RFM95W · ABP/OTAA</text>
+  <g transform="translate(225,220)">
+    <circle r="18" class="rf d1"/><circle r="18" class="rf d2"/>
+    <rect x="-30" y="-16" width="60" height="32" rx="7" class="box"/><circle cx="22" cy="-8" r="3" fill="#ffd166" class="led"/>
+    <text x="-16" y="5" class="s" style="fill:#c9dbea">STM32</text>
+  </g>
+  <text x="225" y="253" text-anchor="middle" class="s">Radioenge · SX1272</text>
+  <g transform="translate(225,320)">
+    <circle r="18" class="rf d2"/><circle r="18" class="rf"/>
+    <rect x="-30" y="-16" width="60" height="32" rx="7" class="box"/><circle cx="22" cy="-8" r="3" fill="#00c6ff" class="led"/>
+    <text x="-19" y="5" class="s" style="fill:#c9dbea">Nó IoT</text>
+  </g>
+  <text x="225" y="353" text-anchor="middle" class="s">Classe A/C</text>
+</g>
+
+<!-- pacotes RF: uplink (nó → gateway) -->
+<circle r="5" fill="#00f5a8" filter="url(#g)"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#p1"/></animateMotion></circle>
+<circle r="5" fill="#00f5a8" filter="url(#g)"><animateMotion dur="2.4s" begin="0.8s" repeatCount="indefinite"><mpath href="#p2"/></animateMotion></circle>
+<circle r="5" fill="#00f5a8" filter="url(#g)"><animateMotion dur="2.4s" begin="1.6s" repeatCount="indefinite"><mpath href="#p3"/></animateMotion></circle>
+<!-- pacotes RF: downlink (gateway → nó) -->
+<rect x="-4" y="-4" width="8" height="8" rx="1.5" fill="#ffb347" filter="url(#g)"><animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#p1"/></animateMotion></rect>
+<rect x="-4" y="-4" width="8" height="8" rx="1.5" fill="#ffb347" filter="url(#g)"><animateMotion dur="2.4s" begin="2s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#p2"/></animateMotion></rect>
+<rect x="-4" y="-4" width="8" height="8" rx="1.5" fill="#ffb347" filter="url(#g)"><animateMotion dur="2.4s" begin="0.4s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#p3"/></animateMotion></rect>
+<text x="333" y="211" text-anchor="middle" class="s">LoRa RF</text>
+
+<!-- gateway -->
+<g class="gw">
+  <rect x="410" y="178" width="110" height="84" rx="12" class="box" style="stroke:#00e5a0"/>
+  <path d="M465,178 L465,152 M455,158 A14,14 0 0 1 475,158 M449,150 A22,22 0 0 1 481,150" fill="none" stroke="#00e5a0" stroke-width="2" stroke-linecap="round"/>
+  <text x="465" y="212" text-anchor="middle" class="t">Gateway</text>
+  <text x="465" y="232" text-anchor="middle" class="s">ESP32 + SX1302</text>
+  <text x="465" y="248" text-anchor="middle" class="s" style="fill:#00e5a0">8 canais</text>
+</g>
+
+<!-- pacotes backhaul: uplink (→) -->
+<rect width="10" height="6" rx="2" fill="#00f5a8" filter="url(#g)" x="-5" y="-3"><animateMotion dur="1.2s" repeatCount="indefinite"><mpath href="#u1"/></animateMotion></rect>
+<rect width="10" height="6" rx="2" fill="#00f5a8" filter="url(#g)" x="-5" y="-3"><animateMotion dur="1.2s" begin=".4s" repeatCount="indefinite"><mpath href="#u2"/></animateMotion></rect>
+<rect width="10" height="6" rx="2" fill="#00f5a8" filter="url(#g)" x="-5" y="-3"><animateMotion dur="1.2s" begin=".8s" repeatCount="indefinite"><mpath href="#u3"/></animateMotion></rect>
+<!-- pacotes backhaul: downlink (←) -->
+<rect width="10" height="6" rx="2" fill="#ffb347" filter="url(#g)" x="-5" y="-3"><animateMotion dur="1.2s" begin=".6s" repeatCount="indefinite"><mpath href="#d3"/></animateMotion></rect>
+<rect width="10" height="6" rx="2" fill="#ffb347" filter="url(#g)" x="-5" y="-3"><animateMotion dur="1.2s" begin="1s" repeatCount="indefinite"><mpath href="#d2"/></animateMotion></rect>
+<rect width="10" height="6" rx="2" fill="#ffb347" filter="url(#g)" x="-5" y="-3"><animateMotion dur="1.2s" begin=".2s" repeatCount="indefinite"><mpath href="#d1"/></animateMotion></rect>
+<text x="555" y="198" text-anchor="middle" class="s">UDP/MQTT</text>
+<text x="765" y="198" text-anchor="middle" class="s">gRPC</text>
+<text x="975" y="198" text-anchor="middle" class="s">REST</text>
+
+<!-- ChirpStack -->
+<rect x="590" y="172" width="140" height="96" rx="12" class="box"/>
+<text x="660" y="210" text-anchor="middle" class="t">ChirpStack</text>
+<text x="660" y="230" text-anchor="middle" class="s">Network Server</text>
+<text x="660" y="248" text-anchor="middle" class="s">v3 · v4</text>
+
+<!-- Kubernetes -->
+<rect x="800" y="172" width="140" height="96" rx="12" class="box" style="stroke:#326ce5"/>
+<g transform="translate(820,198)" fill="none" stroke="#5b8cff" stroke-width="2"><polygon points="0,-11 9,-7 11,3 5,11 -5,11 -11,3 -9,-7"/><circle r="3"/></g>
+<text x="882" y="203" text-anchor="middle" class="t">Kubernetes</text>
+<text x="870" y="230" text-anchor="middle" class="s">OCI · ARM64</text>
+<text x="870" y="248" text-anchor="middle" class="s">Always Free</text>
+
+<!-- Apps -->
+<rect x="1010" y="172" width="160" height="96" rx="12" class="box" style="stroke:#7b6cff"/>
+<text x="1090" y="210" text-anchor="middle" class="t">Aplicações</text>
+<text x="1090" y="230" text-anchor="middle" class="s">Spring · Angular</text>
+<text x="1090" y="248" text-anchor="middle" class="s">Flutter</text>
+
+<text x="600" y="384" text-anchor="middle" class="s" style="fill:#5f7a94">Classe A: downlink nas janelas RX1/RX2 após cada uplink · Classe C: recepção contínua</text>
+</svg>
